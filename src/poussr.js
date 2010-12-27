@@ -81,10 +81,10 @@ Poussr.prototype = {
 
   dispatch_event: function(evt_name, evt_data) {
     var callbacks = this._callbacks[evt_name];
-    
+
     if (callbacks) {
       for (var i=0; i < callbacks.length; i++) {
-        callbacks[i] (event_data);
+        callbacks[i] (evt_data);
       }
     }
   },
@@ -97,7 +97,9 @@ Poussr.prototype = {
   }
 };
 
-Poussr.log = function(msg) { console.log(msg); };
+Poussr.log = function() {
+ if (window.console) window.console.log.apply(window.console, arguments);
+};
 
 Poussr.parse = function(data) {
     try {
