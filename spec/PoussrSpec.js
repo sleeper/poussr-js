@@ -74,3 +74,39 @@ describe("Connected Poussr object", function() {
   });
 
 });
+
+
+describe("Poussr object on disconnection", function() {
+  var host = "here";
+  var port = 12345;
+  var channel = "mychannel";
+  var poussr;
+
+  beforeEach(function () {
+    poussr = new Poussr(host, port, channel);
+    spyOn(window, 'WebSocket').andReturn({});
+    poussr.connect();
+  });
+
+  it("should dispatch a 'poussr:disconnected' event",function() {
+    spyOn(poussr, 'dispatch_event');
+    poussr.onclose();
+
+    expect(poussr.dispatch_event).toHaveBeenCalledWith('poussr:disconnected');    
+
+  });
+
+  it("should log it",function() {
+    spyOn(Poussr, 'log');
+    poussr.onclose();
+
+    expect(Poussr.log).toHaveBeenCalled();
+
+  });
+
+
+  it("should try to reconnect",function() {
+    expect(1 ).toEqual(2);
+  });
+
+})

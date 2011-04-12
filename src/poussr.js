@@ -45,6 +45,7 @@ Poussr.prototype = {
   onopen: function() {
     Poussr.log("Sending event 'poussr:subscribe' with channel name:" + this._channel_name);
 
+    this.dispatch_event('poussr:connected');
     this.send_event('poussr:subscribe', JSON.stringify({'channel': this._channel_name}));
   },
 
@@ -94,6 +95,9 @@ Poussr.prototype = {
     /* FIXME: Handle the case when the connection went down but we
      * do want to reconnect.
      */
+    this.dispatch_event('poussr:disconnected');
+    Poussr.log('Poussr: disconnection received.');
+    
   }
 };
 
